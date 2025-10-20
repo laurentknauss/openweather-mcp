@@ -51,7 +51,7 @@ app.get("/mcp", async (req: Request, res: Response) => {
 });
 
 app.delete("/mcp", async (req: Request, res: Response) => {
-  console.log("Received GET MCP request");
+  console.log("Received DELETE MCP request");
   res.writeHead(405).end(
     JSON.stringify({
       jsonrpc: "2.0",
@@ -64,15 +64,12 @@ app.delete("/mcp", async (req: Request, res: Response) => {
   );
 });
 
-app.listen(config.MCP_HTTP_PORT, (error) => {
-  if (error) {
-    console.error("Failed to start server:", error);
-    process.exit(1);
-  }
-  console.log(`MCP Streamable HTTP Server listening on port ${config.MCP_HTTP_PORT}`);
+app.listen(config.MCP_HTTP_PORT, () => {
+  console.log(`🌤️  OpenWeatherMap MCP Server listening on port ${config.MCP_HTTP_PORT}`);
+  console.log(`📡 Endpoint: http://localhost:${config.MCP_HTTP_PORT}/mcp`);
 });
 
 process.on("SIGINT", async () => {
-  console.log("Server shutdown complete");
+  console.log("\n👋 Shutting down OpenWeatherMap MCP Server...");
   process.exit(0);
 });
