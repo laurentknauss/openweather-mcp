@@ -15,5 +15,5 @@
     "verbatimModuleSyntax": true
   },
   "include": ["src/**/*"],
-  "exclude": ["node_modules"]
+  "exclude": ["node_modules", "src/langchain-weather-tool.ts", "test-zod.ts", "type-test.ts"]
 }

@@ -5,6 +5,7 @@ dotenv.config();
 
 const EnvSchema = z.object({
   MCP_HTTP_PORT: z.coerce.number().int().positive().default(3000),
+  OPENWEATHERMAP_API_KEY: z.string().min(1, "OpenWeatherMap API key is required"),
 });
 
 const parsedEnv = EnvSchema.safeParse(process.env);
