@@ -1,8 +1,21 @@
 {
+  "$schema": "https://json.schemastore.org/prettierrc",
   "tabWidth": 2,
   "useTabs": false,
   "singleQuote": false,
   "trailingComma": "all",
   "printWidth": 120,
-  "bracketSpacing": true
+  "bracketSpacing": true,
+  "semi": true,
+  "arrowParens": "always",
+  "endOfLine": "lf",
+  "overrides": [
+    {
+      "files": "*.md",
+      "options": {
+        "printWidth": 80,
+        "proseWrap": "preserve"
+      }
+    }
+  ]
 }
