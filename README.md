@@ -131,6 +131,50 @@ src/
 └── types.ts        # TypeScript types for OpenWeatherMap API
 ```
 
+### File Roles
+
+#### `src/index.ts`
+
+**Role:** HTTP Server Entry Point
+
+- Sets up Express.js application
+- Configures Streamable HTTP transport for MCP protocol
+- Handles POST requests to `/mcp` endpoint (main communication)
+- Returns 405 (Method Not Allowed) for GET and DELETE requests
+- Manages server lifecycle (startup, shutdown via SIGINT)
+- Creates new `McpServer` instance per request via `getServer()`
+
+#### `src/server.ts`
+
+**Role:** MCP Server Logic & Tool Definitions
+
+- Exports `getServer()` function that returns configured `McpServer` instance
+- Defines the `getWeatherForecast` tool with Zod schema validation
+- Implements OpenWeatherMap API integration logic
+- Handles API responses and formats weather data
+- Defines the `weatherForecastPrompt` template
+- Contains all business logic for weather data processing
+
+#### `src/config.ts`
+
+**Role:** Environment Configuration & Validation
+
+- Validates required environment variables using Zod schemas
+- Ensures `OPENWEATHERMAP_API_KEY` is present and non-empty
+- Provides `MCP_HTTP_PORT` with default value of 3000
+- Exits process with clear error messages if configuration is invalid
+- Exports typed `config` object for use across the application
+
+#### `src/types.ts`
+
+**Role:** TypeScript Type Definitions
+
+- Defines `ForecastItem` interface for individual weather data points
+- Defines `ForecastResponse` interface for full API response structure
+- Ensures type safety when working with OpenWeatherMap API responses
+- Documents the shape of API data (temperature, weather, wind, etc.)
+- Used by `server.ts` for type checking and autocomplete
+
 ## Development
 
 ### Adding New Tools
