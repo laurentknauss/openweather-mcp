@@ -1,0 +1,223 @@
+# OpenWeatherMap MCP Server
+
+> Weather forecast data via Model Context Protocol (MCP)
+
+## Overview
+
+This is a production-ready MCP server that provides weather forecasts from OpenWeatherMap API. Built with TypeScript, Express.js, and the latest MCP SDK v1.20.1.
+
+## Quick Start
+
+```bash
+# 1. Clone repository
+git clone <repository-url>
+cd mcp-server-openweather
+
+# 2. Install dependencies
+npm install
+
+# 3. Configure environment
+cp .env.example .env
+# Add your OpenWeatherMap API key to .env
+
+# 4. Run server
+npm run dev
+```
+
+## Requirements
+
+- Node.js 22+
+- OpenWeatherMap API key (free tier: https://openweathermap.org/api)
+
+## Available Tools
+
+### getWeatherForecast
+
+Fetches 1-5 day weather forecasts for any city worldwide.
+
+**Parameters:**
+- `city` (string, required) - City name (e.g., "Paris", "New York")
+- `country` (string, optional) - ISO country code (e.g., "FR", "US")
+- `days` (number, optional) - Forecast days 1-5 (default: 3)
+
+**Example Usage:**
+```json
+{
+  "city": "Tokyo",
+  "country": "JP",
+  "days": 5
+}
+```
+
+**Returns:**
+Formatted weather forecast with daily min/max/avg temperatures and weather descriptions.
+
+## Available Prompts
+
+### weatherForecastPrompt
+
+Template for requesting weather forecasts in a friendly, conversational manner.
+
+## Configuration
+
+Environment variables (`.env` file):
+
+```env
+OPENWEATHERMAP_API_KEY=your_api_key_here
+MCP_HTTP_PORT=3000
+```
+
+## API Endpoint
+
+- **URL**: `http://localhost:3000/mcp`
+- **Method**: POST
+- **Protocol**: MCP via Streamable HTTP
+
+## Technology Stack
+
+- **MCP SDK**: @modelcontextprotocol/sdk v1.20.1
+- **Framework**: Express.js v5.1.0
+- **Language**: TypeScript
+- **Validation**: Zod v3.23.8
+- **API**: OpenWeatherMap 5-day Forecast
+
+## Project Structure
+
+```
+src/
+├── index.ts    # Express server + HTTP transport
+├── server.ts   # MCP tools and business logic
+├── config.ts   # Environment validation
+└── types.ts    # TypeScript type definitions
+```
+
+## Development Commands
+
+```bash
+npm run dev        # Development with hot-reload
+npm run build      # Compile TypeScript
+npm start          # Run production build
+npm run inspector  # Test with MCP Inspector
+```
+
+## Features
+
+- ✅ 1-5 day weather forecasts
+- ✅ Global coverage (all OpenWeatherMap cities)
+- ✅ Temperature data (min/max/avg in Celsius)
+- ✅ Weather descriptions
+- ✅ Type-safe with TypeScript
+- ✅ Zod schema validation
+- ✅ Streamable HTTP transport
+- ✅ Error handling for invalid cities/keys
+
+## Common Use Cases
+
+1. **AI Assistant Integration**: Enable weather queries in conversational AI
+2. **Automation**: Fetch weather data for scripts/workflows
+3. **Development**: Test MCP protocol implementations
+4. **Learning**: Example of production MCP server architecture
+
+## Error Handling
+
+The server handles:
+- Invalid API keys (clear error message)
+- City not found (404 handling)
+- Network errors (graceful fallback)
+- Invalid parameters (Zod validation)
+
+## API Limits
+
+OpenWeatherMap Free Tier:
+- 1,000 calls/day
+- 60 calls/minute
+- 5-day forecast (3-hour intervals)
+
+## Security Notes
+
+- API keys stored in `.env` (gitignored)
+- No authentication on MCP endpoint (add if needed)
+- Stateless server design
+- Safe for multiple instances
+
+## Documentation
+
+- **CLAUDE.md** - Comprehensive project documentation
+- **README.md** - Setup and usage guide
+- **src/** - Inline code documentation
+
+## Example Response
+
+```
+🌤️ Weather forecast for Paris, FR:
+📅 2025-10-20: 🌡️ Avg 15°C (Min 12°C, Max 18°C), 🌥️ partly cloudy
+📅 2025-10-21: 🌡️ Avg 16°C (Min 13°C, Max 19°C), 🌥️ clear sky
+📅 2025-10-22: 🌡️ Avg 14°C (Min 11°C, Max 17°C), 🌥️ light rain
+```
+
+## Testing
+
+### With MCP Inspector
+```bash
+npm run inspector
+# Opens browser UI for testing tools
+```
+
+### Manual HTTP Request
+```bash
+curl -X POST http://localhost:3000/mcp \
+  -H "Content-Type: application/json" \
+  -d '{
+    "jsonrpc": "2.0",
+    "method": "tools/call",
+    "params": {
+      "name": "getWeatherForecast",
+      "arguments": {
+        "city": "London",
+        "country": "GB",
+        "days": 3
+      }
+    },
+    "id": 1
+  }'
+```
+
+## Deployment
+
+Works with:
+- Docker/Podman containers
+- Cloud platforms (Heroku, Railway, Render)
+- VPS/bare metal servers
+- Serverless (with adapter)
+
+## Contributing
+
+Contributions welcome! Areas for improvement:
+- Additional weather endpoints (current, hourly)
+- Caching layer (Redis)
+- Rate limiting
+- Authentication
+- Unit/integration tests
+- Metrics/monitoring
+
+## License
+
+See LICENSE file in repository.
+
+## Links
+
+- Repository: <your-github-url>
+- MCP Specification: https://modelcontextprotocol.io/
+- OpenWeatherMap API: https://openweathermap.org/api
+- MCP SDK: https://github.com/modelcontextprotocol/typescript-sdk
+
+## Support
+
+For issues or questions:
+- Open GitHub issue
+- Check CLAUDE.md for detailed documentation
+- Review OpenWeatherMap API docs
+
+---
+
+Built with ❤️ using Model Context Protocol
