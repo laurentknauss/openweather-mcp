@@ -1,5 +1,10 @@
 // TypeScript types for OpenWeatherMap API responses
 
+export interface Coord {
+  lat: number;
+  lon: number;
+}
+
 export interface ForecastItem {
   dt: number;
   dt_txt: string;
@@ -25,15 +30,18 @@ export interface ForecastItem {
   };
 }
 
+export interface City {
+  id: number;
+  name: string;
+  coord: Coord; // Added for city level coordinates
+  country: string;
+  timezone: number;
+}
+
 export interface ForecastResponse {
   cod: string;
   message: number;
   cnt: number;
   list: ForecastItem[];
-  city: {
-    id: number;
-    name: string;
-    country: string;
-    timezone: number;
-  };
+  city: City;
 }
